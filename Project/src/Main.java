@@ -1,5 +1,7 @@
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,6 +33,7 @@ public class Main {
             m = 60;
         }
         
+        ExecutorService e = Executors.newFixedThreadPool(t);
         
         
         Game g = new Game(n, t, m);
