@@ -12,9 +12,22 @@ public class Point {
     boolean edge;
     float x;
     float y;
+    
     public Point(float x, float y){
         this.edge = false;
         this.x = x;
         this.y = y;
+    }
+    
+    public float getX(){
+        return x;
+    }
+    
+    public float getY(){
+        return y;
+    }
+    
+    public String toString(){
+        return "( " + x + ", " + y + " )";
     }
 }
