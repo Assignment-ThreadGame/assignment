@@ -30,6 +30,9 @@ public class Main {
             //m = k.nextInt();
             m = 60;
         }
+        
+        
+        
         Game g = new Game(n, t, m);
     }
 }
