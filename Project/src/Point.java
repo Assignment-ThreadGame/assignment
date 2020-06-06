@@ -10,11 +10,8 @@
  */
 public class Point {
     boolean edge;
-    float x;
-    float y;
-    public Point(float x, float y){
+    
+    public Point(){
         this.edge = false;
-        this.x = x;
-        this.y = y;
     }
 }
