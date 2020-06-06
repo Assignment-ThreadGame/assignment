@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner k = new Scanner(System.in);
         int n = 0, t = 0, m = 0;
+        
+        //get the thrads, number of points, and time
         while(n <= 0){
             System.out.println("How many points?");
             //n = k.nextInt();
@@ -25,14 +27,15 @@ public class Main {
         while(t <= 0 || n < t){
             System.out.println("How many threads?");
             //t = k.nextInt();
-            t = 2;
+            t = 4;
         }
         while(m <= 0){
             System.out.println("How many seconds?");
             //m = k.nextInt();
-            m = 60;
+            m = 30;
         }
         
+        //declare executor
         ExecutorService e = Executors.newFixedThreadPool(t);
         
         
