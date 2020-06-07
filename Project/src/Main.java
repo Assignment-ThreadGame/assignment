@@ -27,18 +27,32 @@ public class Main {
         while(t <= 0 || n < t){
             System.out.println("How many threads?");
             //t = k.nextInt();
-            t = 4;
+            t = 2;
         }
         while(m <= 0){
             System.out.println("How many seconds?");
             //m = k.nextInt();
-            m = 30;
+            m = 90;
         }
         
         //declare executor
         ExecutorService e = Executors.newFixedThreadPool(t);
         
-        
+        //declare game
         Game g = new Game(n, t, m);
+        
+//        //start threads
+//        ThreadController tc[] = new ThreadController[t];
+//        int count = 0;
+//        while(count < t){
+//            tc[count] = new ThreadController(g);
+//            e.submit(tc[count]);
+//            count++;
+//        }
+//        //set game start time now
+//        g.setStart();
+//        
+//        e.shutdownNow();
+//        
     }
 }

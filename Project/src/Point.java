@@ -9,12 +9,12 @@
  * @author sarahsyazwina
  */
 public class Point {
-    boolean edge;
+    Edge edge;
     float x;
     float y;
     
     public Point(float x, float y){
-        this.edge = false;
+        this.edge = null;
         this.x = x;
         this.y = y;
     }
