@@ -11,8 +11,8 @@ import javax.swing.SwingUtilities;
  */
 public class LineDrawer extends JFrame {
  
-    public LinesDrawingExample() {
-        super("Lines Drawing Demo");
+    public LinesDrawer() {
+        super("Lines Drawing");
  
         setSize(480, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
