@@ -22,11 +22,11 @@ public class LineDrawer extends JFrame {
     void drawLines(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
  
-        g2d.drawLine(120, 50, 360, 50);
+        g2d.drawLine(120, 50);
  
-        g2d.draw(new Line2D.Double(59.2d, 99.8d, 419.1d, 99.8d));
+        g2d.draw(new Line2D.Double(59.2d, 99.8d));
  
-        g2d.draw(new Line2D.Float(21.50f, 132.50f, 459.50f, 132.50f));
+        g2d.draw(new Line2D.Float(21.50f, 132.50f));
  
     }
  
