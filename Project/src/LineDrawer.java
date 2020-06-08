@@ -34,5 +34,11 @@ public class LineDrawer extends JFrame {
         super.paint(g);
         drawLines(g);
     }
- 
+   
+   SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new LinesDrawingExample().setVisible(true);
+            }
+        });
 }
