@@ -1,5 +1,6 @@
 
 import java.awt.Graphics;
+import java.awt.Color;
 import javax.swing.JFrame;
 
  
@@ -17,9 +18,12 @@ public class LinesDrawing extends JFrame {
        
     }
  
-    public void drawLines(Graphics g) {
+    public void paint(Graphics g) {
+        g.setColor(Color.RED);
         g.drawLine(0, 480, 960, 480);
+        g.setColor(Color.BLUE);
         g.drawLine(0, 0, 960, 960);
+        g.setColor(Color.GREEN);
         g.drawLine(300, 300, 500, 100);
  
     }
