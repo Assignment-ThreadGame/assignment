@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Edge {
     String name;
+    String creator;
     Point a;
     Point b;
 
@@ -31,14 +32,16 @@ public class Edge {
         this.b = null;
     }
     
-    public Edge(Point a, Point b, String name) {
+    public Edge(Point a, Point b, String name, String creator) {
+        String s[] = creator.split("-");
+        this.creator = "Thread " + s[3];
         this.name = name;
         this.a = a;
         this.b = b;
     }
     
     public String toString(){
-        return name + " between "+ a.toString() + " and " + b.toString();
+        return name + " between "+ a.toString() + " and " + b.toString() + " created by " + creator;
     }
     
     public boolean exists(ArrayList<Edge> arr){
