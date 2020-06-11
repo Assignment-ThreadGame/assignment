@@ -19,16 +19,19 @@ public class Main {
         int n = 0, t = 0, m = 0;
         
         //get the thrads, number of points, and time
-        while(n <= 0){
+        //points must be more than 1
+        while(n <= 1){
             System.out.println("How many points?");
             //n = k.nextInt();
             n = 4;
         }
+        //threads must be less than n
         while(t <= 0 || n < t){
             System.out.println("How many threads?");
             //t = k.nextInt();
             t = 2;
         }
+        //seconds must be more than 1
         while(m <= 0){
             System.out.println("How many seconds?");
             //m = k.nextInt();
