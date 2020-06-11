@@ -78,6 +78,10 @@ public class Game extends JPanel{
             
         }
         printEdges();
+        
+        for (int i = 0; i < tc.length; i++) {
+            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edges and failed " + tc[i].getFail() + " times.");
+        }
     }
     
     public Status addEdge(){

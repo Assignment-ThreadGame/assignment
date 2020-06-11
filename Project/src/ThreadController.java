@@ -19,9 +19,11 @@ public class ThreadController implements Runnable{
     private int fail;
     private int win;
     private String name;
+    private double runtime;
     
     public ThreadController(Game g) {
         this.g = g;
+        this.runtime = 0;
         this.fail = 0;
         this.win = 0;
         stopGame = false;
@@ -50,7 +52,9 @@ public class ThreadController implements Runnable{
                     default:
                 }
             }
-            System.out.println("-----\nEnd : " + name + "\n" + "Runtime : " + runTime() + " seconds");
+            double temp = runTime();
+            this.runtime = temp;
+            System.out.println("-----\nEnd : " + name + "\n" + "Runtime : " + temp + " seconds");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -62,6 +66,10 @@ public class ThreadController implements Runnable{
 
     public int getWin() {
         return win;
+    }
+    
+    public String getName() {
+        return name;
     }
     
     private boolean isOver(){
