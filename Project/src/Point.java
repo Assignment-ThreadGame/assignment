@@ -12,11 +12,13 @@ import java.util.ArrayList;
  * @author sarahsyazwina
  */
 public class Point {
+    String name;
     Edge edge;
     float x;
     float y;
     
-    public Point(float x, float y){
+    public Point(float x, float y, String name){
+        this.name = "Point " + name;
         this.edge = null;
         this.x = x;
         this.y = y;
@@ -43,7 +45,22 @@ public class Point {
         return false;
     }
     
+    public boolean same(Point b){
+        try{
+            if(this.x == b.getX() && this.y == b.getY()){
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public String toString(){
-        return "( " + x + ", " + y + " )";
+        return name + " ( " + x + ", " + y + " ) ";
+    }
+    
+    public String getName(){
+        return name;
     }
 }

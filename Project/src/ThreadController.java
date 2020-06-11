@@ -15,38 +15,63 @@ public class ThreadController implements Runnable{
     
     public static Game g;
     public final int MAX = 20;
-    public boolean stopGame = false;
+    public boolean stopGame;
     private int fail;
     private int win;
-
+    private String name;
+    
     public ThreadController(Game g) {
-        ThreadController.g = g;
+        this.g = g;
+        this.fail = 0;
+        this.win = 0;
+        stopGame = false;
     }
 
     @Override
     public void run() {
         String t = Thread.currentThread().getName();
+        String s[] = t.split("-");
+        name = "Thread " + s[3];
+        System.out.println("-----\nStarting : " + name);
         try{
             //while the thread has not failed > 20 and game is not over
             while(fail < MAX && !isOver() && !stopGame){
-                boolean result = g.getBoard().addEdge();
-                if(result){
-                    win++;
-                }
-                else{
-                    fail++;
+                Game.Status result = g.addEdge();
+                switch(result){
+                    case SUCCESS:
+                        win++;
+                        break;
+                    case FAIL:
+                        fail++;
+                        break;
+                    case END:
+                        stopGame = true;
+                        break;
+                    default:
                 }
             }
-            Thread.sleep(1000);
-            System.out.println("-----\nEnd thread : " + t + "\n" + "Runtime : " + runTime() + " seconds");
+            System.out.println("-----\nEnd : " + name + "\n" + "Runtime : " + runTime() + " seconds");
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+
+    public int getFail() {
+        return fail;
+    }
+
+    public int getWin() {
+        return win;
+    }
     
     private boolean isOver(){
         long now = System.nanoTime();
-        return (now - g.getStart()) > g.getTimeLimit();
+        double test = (now - g.getStart()) / 1_000_000_000;
+//        System.out.println("Runtime: " + test + " > " + g.getTimeLimit());
+        if(test >= g.getTimeLimit()){
+            return true;
+        }
+        return false;
     }
     
     private double runTime(){
