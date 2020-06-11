@@ -86,7 +86,7 @@ public class Game extends JPanel{
     
     public Status addEdge(){
         try{
-            System.out.println(Thread.currentThread().getName() + " attempting...");
+            System.out.println("-----\n" + Thread.currentThread().getName() + " attempting...");
             //lock for other threads
             lock.lock();
             //for every two points only one edge is possible, threfore the number
@@ -114,7 +114,7 @@ public class Game extends JPanel{
                     z++;
                     return Status.SUCCESS;
                 }
-                System.out.println(Thread.currentThread().getName() + " failure, edge attempt between : " + a.toString() + " and " + b.toString());
+                System.out.println("-----\n" + Thread.currentThread().getName() + " failure, edge attempt between : " + a.toString() + " and " + b.toString());
                 return Status.FAIL;
             }
             //unlock for other threads
