@@ -114,7 +114,7 @@ public class Game extends JPanel{
                     z++;
                     return Status.SUCCESS;
                 }
-                System.out.println(Thread.currentThread().getName() + " failure...");
+                System.out.println(Thread.currentThread().getName() + " failure, edge attempt between : " + a.toString() + " and " + b.toString());
                 return Status.FAIL;
             }
             //unlock for other threads
