@@ -39,7 +39,7 @@ public class Main {
         ExecutorService e = Executors.newFixedThreadPool(t);
         
         //declare game
-        Game g = new Game(n, t, m);
+        Game g = new Game(n, t, m, e);
         
 //        //start threads
 //        ThreadController tc[] = new ThreadController[t];
