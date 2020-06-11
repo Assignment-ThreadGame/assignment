@@ -76,13 +76,17 @@ public class Game extends JPanel{
         while(!e.isTerminated()){
             
         }
-        
     }
     
     private Status addEdge(){
         //lock for other threads
         lock.lock();
-        
+        //for every two points only one edge is possible, threfore the number
+        //of possible edges is n/2
+        int possible = points.size() / 2;
+        if(edges.size() < possible ){
+            
+        }
         //unlock for other threads
         lock.unlock();
         return Status.END;
