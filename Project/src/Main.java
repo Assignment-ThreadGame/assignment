@@ -29,7 +29,7 @@ public class Main {
         while(t <= 0 || n < t){
             System.out.println("How many threads?");
             //t = k.nextInt();
-            t = 2;
+            t = 3;
         }
         //seconds must be more than 1
         while(m <= 0){
