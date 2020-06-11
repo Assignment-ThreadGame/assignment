@@ -78,7 +78,7 @@ public class Game extends JPanel{
             
         }
         printEdges();
-        
+        System.out.println("-----");
         for (int i = 0; i < tc.length; i++) {
             System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
         }
@@ -86,6 +86,7 @@ public class Game extends JPanel{
     
     public Status addEdge(){
         try{
+            System.out.println(Thread.currentThread().getName() + " attempting...");
             //lock for other threads
             lock.lock();
             //for every two points only one edge is possible, threfore the number
@@ -113,6 +114,7 @@ public class Game extends JPanel{
                     z++;
                     return Status.SUCCESS;
                 }
+                System.out.println(Thread.currentThread().getName() + " failure...");
                 return Status.FAIL;
             }
             //unlock for other threads
@@ -124,6 +126,7 @@ public class Game extends JPanel{
         finally{
             lock.unlock();
         }
+        System.out.println(Thread.currentThread().getName() + " found no more possible edges...");
         return Status.END;
     }
     
