@@ -5,3 +5,11 @@ Project/build/classes/Point.class
 Project/nbproject/private/private.xml
 Project/build/classes/.netbeans_update_resources
 Project/build/classes/.netbeans_automatic_build
+Project/build/classes/Main.class
+Project/build/classes/Game.class
+Project/build/classes/Point.class
+*.class
+Project/nbproject/private/private.xml
+*.class
+*.xml
+*.class
