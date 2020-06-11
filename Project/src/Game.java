@@ -80,7 +80,7 @@ public class Game extends JPanel{
         printEdges();
         
         for (int i = 0; i < tc.length; i++) {
-            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edges and failed " + tc[i].getFail() + " times.");
+            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
         }
     }
     
@@ -103,7 +103,7 @@ public class Game extends JPanel{
 
                 //create edge between points
                 String s = "Edge " + z;
-                Edge temp = new Edge(a,b,s);
+                Edge temp = new Edge(a,b,s,Thread.currentThread().getName());
 
                 if(!temp.exists(edges)){
                     System.out.println("-----\nEdge being created by " + Thread.currentThread().getName()

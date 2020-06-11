@@ -23,7 +23,7 @@ public class Main {
         while(n <= 1){
             System.out.println("How many points?");
             //n = k.nextInt();
-            n = 8;
+            n = 7;
         }
         //threads must be less than n
         while(t <= 0 || n < t){
