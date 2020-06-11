@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.*;
 
 /*
@@ -17,27 +19,73 @@ import javax.swing.*;
  * @author sarahsyazwina
  */
 public class Game extends JPanel{
+    
+    //arraylists
     private static ArrayList<Point> points = new ArrayList<Point>();
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
     private static ArrayList<Object> shapes = new ArrayList<>();
-    private static int n, t, m;
+    
+    //other
+    private static int n = 0, t = 0, m = 0;
+    private static ExecutorService e;
     private static int WIDTH = 1000, HEIGHT = 1000;
     private static long startTime;
     private static Board b;
     
-    public Game(int n, int t, int m){
+    //status
+    private enum Status{
+        SUCCESS,
+        FAIL,
+        END
+    }
+    
+    //locks
+    private ReentrantLock lock = new ReentrantLock();
+    
+    public Game(int n, int t, int m, ExecutorService e){
         //initialise game n = points, t = threads, m = seconds
         Game.t = t;
         Game.n = n;
         Game.m = m;
-        Game.b = new Board();
+        Game.e = e;
+        //for actions on the board
+        //Game.b = new Board();
         //testDraw();
-        //genPoints();
-        drawBoard();
+        //generate n random points
+        genPoints();
+        //start threads
+        startThreads();
+        //drawBoard();
         //drawPoints();
         //launch threads
         //any thread wins or time = m end program
         //display results
+        //draw board with points and edges
+    }
+    
+    private void startThreads(){
+        ThreadController tc[] = new ThreadController[t];
+        int count = 0;
+        while(count < t){
+            tc[count] = new ThreadController(this);
+            e.submit(tc[count]);
+            count++;
+        }
+        setStart();
+        e.shutdown();
+        while(!e.isTerminated()){
+            
+        }
+        
+    }
+    
+    private Status addEdge(){
+        //lock for other threads
+        lock.lock();
+        
+        //unlock for other threads
+        lock.unlock();
+        return Status.END;
     }
     
     private void testDraw(){
@@ -71,11 +119,27 @@ public class Game extends JPanel{
         ArrayList<Point> temp = new ArrayList<Point>();
         while(temp.size() != n){
             Random r = new Random();
+            float x = (float) (Math.round((r.nextFloat() * WIDTH) * 100.0) / 100.0);
+            float y = (float) (Math.round((r.nextFloat() * WIDTH) * 100.0) / 100.0);
+            Point test = new Point(x, y);
+            if(!test.exists(temp)){
+                temp.add(test);
+            }
+        }
+        points = temp;
+        printPoints();
+    }
+    
+    private void printPoints(){
+        System.out.println("-----");
+        System.out.println("Generated points: ");
+        for (int i = 0; i < points.size(); i++) {
+            System.out.println("Point " + (i+1) + points.get(i).toString());
         }
     }
     
-    public int getTimeLimit(){
-        return m;
+    public long getTimeLimit(){
+        return m * 1_000_000_000;
     }
     
     public void setStart(){
@@ -125,6 +189,7 @@ public class Game extends JPanel{
 //                }
 //            }
             drawLine(g);
+            
         }
         
         private void drawLine(Graphics g){
