@@ -23,7 +23,7 @@ public class Game extends JPanel{
     //arraylists
     private static ArrayList<Point> points = new ArrayList<Point>();
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
-    private static ArrayList<Object> shapes = new ArrayList<>();
+    private static ArrayList<Line> lines  = new ArrayList<>();
     
     //other
     private static int n, t, m, z;
