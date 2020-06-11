@@ -17,7 +17,7 @@ public class ThreadController implements Runnable{
     private int win;
 
     public ThreadController(Game g) {
-        this.g = g;
+        ThreadController.g = g;
     }
 
     @Override
