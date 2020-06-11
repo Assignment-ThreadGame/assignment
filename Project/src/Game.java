@@ -26,14 +26,14 @@ public class Game extends JPanel{
     private static ArrayList<Object> shapes = new ArrayList<>();
     
     //other
-    private static int n = 0, t = 0, m = 0;
+    private static int n, t, m, z;
     private static ExecutorService e;
     private static int WIDTH = 1000, HEIGHT = 1000;
     private static long startTime;
     private static Board b;
     
     //status
-    private enum Status{
+    public enum Status{
         SUCCESS,
         FAIL,
         END
@@ -48,6 +48,7 @@ public class Game extends JPanel{
         Game.n = n;
         Game.m = m;
         Game.e = e;
+        z = 0;
         //for actions on the board
         //Game.b = new Board();
         //testDraw();
@@ -64,6 +65,7 @@ public class Game extends JPanel{
     }
     
     private void startThreads(){
+        setStart();
         ThreadController tc[] = new ThreadController[t];
         int count = 0;
         while(count < t){
@@ -71,52 +73,81 @@ public class Game extends JPanel{
             e.submit(tc[count]);
             count++;
         }
-        setStart();
         e.shutdown();
         while(!e.isTerminated()){
             
         }
+        printEdges();
     }
     
-    private Status addEdge(){
-        //lock for other threads
-        lock.lock();
-        //for every two points only one edge is possible, threfore the number
-        //of possible edges is n/2
-        int possible = points.size() / 2;
-        if(edges.size() < possible ){
-            
+    public Status addEdge(){
+        try{
+            //lock for other threads
+            lock.lock();
+            //for every two points only one edge is possible, threfore the number
+            //of possible edges is n/2
+            int possible = points.size() / 2;
+            //if there are still edges to be made
+            if(edges.size() < possible ){
+                Point a = points.get(new Random().nextInt(points.size()));
+                Point b = points.get(new Random().nextInt(points.size()));
+
+                //diff points
+                while(a.same(b)){
+                    b = points.get(new Random().nextInt(points.size()));
+                }
+
+                //create edge between points
+                String s = "Edge " + z;
+                Edge temp = new Edge(a,b,s);
+
+                if(!temp.exists(edges)){
+                    System.out.println("-----\nEdge being created by " + Thread.currentThread().getName()
+                            + " between " + a.toString() + " and " + b.toString());
+                    edges.add(temp);
+                    printEdges();
+                    z++;
+                    return Status.SUCCESS;
+                }
+                return Status.FAIL;
+            }
+            //unlock for other threads
+//            return Status.END;
         }
-        //unlock for other threads
-        lock.unlock();
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            lock.unlock();
+        }
         return Status.END;
     }
     
-    private void testDraw(){
-        JFrame board = new JFrame("Board");
-        board.setSize(new Dimension (WIDTH, HEIGHT));
-        JLabel l = new JLabel();
-        board.getContentPane().add(l);
-        board.getContentPane().addMouseMotionListener(new MyMouseAdapter(l));
-        board.setResizable(false);
-        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        board.setVisible(true);
-    }
-    
-    private class MyMouseAdapter extends MouseAdapter {
-        JLabel j;
-        private MyMouseAdapter(JLabel l){
-            j = l;
-        }
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // get Point location and turn into a String
-            String location = String.format("[%d, %d]", e.getX(), e.getY());
-
-            // set the label's text with this String
-            j.setText(location);
-        }
-    }
+//    private void testDraw(){
+//        JFrame board = new JFrame("Board");
+//        board.setSize(new Dimension (WIDTH, HEIGHT));
+//        JLabel l = new JLabel();
+//        board.getContentPane().add(l);
+//        board.getContentPane().addMouseMotionListener(new MyMouseAdapter(l));
+//        board.setResizable(false);
+//        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        board.setVisible(true);
+//    }
+//    
+//    private class MyMouseAdapter extends MouseAdapter {
+//        JLabel j;
+//        private MyMouseAdapter(JLabel l){
+//            j = l;
+//        }
+//        @Override
+//        public void mouseMoved(MouseEvent e) {
+//            // get Point location and turn into a String
+//            String location = String.format("[%d, %d]", e.getX(), e.getY());
+//
+//            // set the label's text with this String
+//            j.setText(location);
+//        }
+//    }
     
     private void genPoints(){
         //generate points
@@ -125,7 +156,7 @@ public class Game extends JPanel{
             Random r = new Random();
             float x = (float) (Math.round((r.nextFloat() * WIDTH) * 100.0) / 100.0);
             float y = (float) (Math.round((r.nextFloat() * WIDTH) * 100.0) / 100.0);
-            Point test = new Point(x, y);
+            Point test = new Point(x, y, String.valueOf(temp.size()));
             if(!test.exists(temp)){
                 temp.add(test);
             }
@@ -138,12 +169,20 @@ public class Game extends JPanel{
         System.out.println("-----");
         System.out.println("Generated points: ");
         for (int i = 0; i < points.size(); i++) {
-            System.out.println("Point " + (i+1) + points.get(i).toString());
+            System.out.println(points.get(i).toString());
+        }
+    }
+    
+    private void printEdges(){
+        System.out.println("-----");
+        System.out.println("Edges: ");
+        for (int i = 0; i < edges.size(); i++) {
+            System.out.println(edges.get(i).toString());
         }
     }
     
     public long getTimeLimit(){
-        return m * 1_000_000_000;
+        return m;
     }
     
     public void setStart(){
