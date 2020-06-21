@@ -1,6 +1,5 @@
 
 import java.awt.*;
-import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 
 /*
@@ -58,14 +57,5 @@ public class Edge {
             e.printStackTrace();
         }
         return false;
-    }
-    
-    public void draw(Graphics g) {
-        int xPoints[] = {9, 15, 0, 18, 3};
-        int yPoints[] = {0, 18, 6, 6, 18};
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        
     }
 }

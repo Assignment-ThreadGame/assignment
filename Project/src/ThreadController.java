@@ -59,7 +59,11 @@ public class ThreadController implements Runnable{
             e.printStackTrace();
         }
     }
-
+    
+    public double getRuntime() {
+        return runtime;
+    }
+    
     public int getFail() {
         return fail;
     }
