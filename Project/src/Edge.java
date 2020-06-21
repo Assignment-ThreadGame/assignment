@@ -58,13 +58,4 @@ public class Edge {
         }
         return false;
     }
-    
-    public void draw(Graphics g) {
-        int xPoints[] = {9, 15, 0, 18, 3};
-        int yPoints[] = {0, 18, 6, 6, 18};
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        
-    }
 }
