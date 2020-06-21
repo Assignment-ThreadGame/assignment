@@ -1,6 +1,5 @@
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,14 +22,13 @@ public class Game extends JPanel{
     //arraylists
     private static ArrayList<Point> points = new ArrayList<Point>();
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
-    private static ArrayList<Object> shapes = new ArrayList<>();
+    private static ArrayList<Line> lines  = new ArrayList<>();
     
     //other
     private static int n, t, m, z;
     private static ExecutorService e;
     private static int WIDTH = 1000, HEIGHT = 1000;
     private static long startTime;
-    private static Board b;
     
     //status
     public enum Status{
@@ -49,19 +47,10 @@ public class Game extends JPanel{
         Game.m = m;
         Game.e = e;
         z = 0;
-        //for actions on the board
-        //Game.b = new Board();
-        //testDraw();
         //generate n random points
         genPoints();
         //start threads
         startThreads();
-        //drawBoard();
-        //drawPoints();
-        //launch threads
-        //any thread wins or time = m end program
-        //display results
-        //draw board with points and edges
     }
     
     private void startThreads(){
@@ -78,6 +67,14 @@ public class Game extends JPanel{
             
         }
         printEdges();
+        printEnd(tc);
+//        System.out.println("-----");
+//        for (int i = 0; i < tc.length; i++) {
+//            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+//        }
+    }
+    
+    private void printEnd(ThreadController tc[]){
         System.out.println("-----");
         for (int i = 0; i < tc.length; i++) {
             System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
@@ -86,7 +83,7 @@ public class Game extends JPanel{
     
     public Status addEdge(){
         try{
-            System.out.println(Thread.currentThread().getName() + " attempting...");
+            System.out.println("-----\n" + Thread.currentThread().getName() + " attempting...");
             //lock for other threads
             lock.lock();
             //for every two points only one edge is possible, threfore the number
@@ -114,7 +111,7 @@ public class Game extends JPanel{
                     z++;
                     return Status.SUCCESS;
                 }
-                System.out.println(Thread.currentThread().getName() + " failure, edge attempt between : " + a.toString() + " and " + b.toString());
+                System.out.println("-----\n" + Thread.currentThread().getName() + " failure, edge attempt between : " + a.toString() + " and " + b.toString());
                 return Status.FAIL;
             }
             //unlock for other threads
@@ -129,32 +126,6 @@ public class Game extends JPanel{
         System.out.println(Thread.currentThread().getName() + " found no more possible edges...");
         return Status.END;
     }
-    
-//    private void testDraw(){
-//        JFrame board = new JFrame("Board");
-//        board.setSize(new Dimension (WIDTH, HEIGHT));
-//        JLabel l = new JLabel();
-//        board.getContentPane().add(l);
-//        board.getContentPane().addMouseMotionListener(new MyMouseAdapter(l));
-//        board.setResizable(false);
-//        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        board.setVisible(true);
-//    }
-//    
-//    private class MyMouseAdapter extends MouseAdapter {
-//        JLabel j;
-//        private MyMouseAdapter(JLabel l){
-//            j = l;
-//        }
-//        @Override
-//        public void mouseMoved(MouseEvent e) {
-//            // get Point location and turn into a String
-//            String location = String.format("[%d, %d]", e.getX(), e.getY());
-//
-//            // set the label's text with this String
-//            j.setText(location);
-//        }
-//    }
     
     private void genPoints(){
         //generate points
@@ -200,53 +171,11 @@ public class Game extends JPanel{
         return startTime;
     }
     
-    public Board getBoard(){
-        return b;
-    }
-    
     public ArrayList<Edge> getEdges(){
         return edges;
     }
     
     public ArrayList<Point> getPoints(){
         return points;
-    }
-    
-    private void drawPoints(){
-        //draw points on board
-    }
-    
-    private void drawBoard(){
-        //draw 1000*1000 panel
-        JFrame board = new JFrame("Board");
-        Draw panel = new Draw();
-        board.setSize(new Dimension (WIDTH, HEIGHT));
-        board.getContentPane().add(panel);
-        board.setResizable(false);
-        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        board.setVisible(true);
-    }
-    
-    class Draw extends JPanel{
-        
-        @Override
-        public void paintComponent(Graphics g){
-            System.out.println("paint");
-            super.paintComponent(g);
-//            for(Object s : shapes){
-//                if(s instanceof Edge){
-//                    ((Edge) s).draw(g);
-//                }
-//            }
-            drawLine(g);
-            
-        }
-        
-        private void drawLine(Graphics g){
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(Color.BLACK);
-            Shape s = new Line2D.Double(90.0, 39.59, 134.0, 789.8);
-            g2d.draw(s);
-        }
     }
 }
