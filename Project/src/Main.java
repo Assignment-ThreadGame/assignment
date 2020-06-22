@@ -105,7 +105,7 @@ class MainPanel extends JFrame {
 
     play.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        playclick(e);
+         playclick(e);
       }
     });
   }
@@ -121,22 +121,50 @@ class MainPanel extends JFrame {
       t = Integer.parseInt(thread.getText());
       m = Integer.parseInt(seconds.getText());
       
-      //declare executor
-      ExecutorService e = Executors.newFixedThreadPool(t);
+      if(n>=1){
+        if (n>t){
+            //declare executor
+            ExecutorService e = Executors.newFixedThreadPool(t);
       
-      //declare game
-      Game g = new Game(n, t, m, e);
-      
-     Runnable r = new Runnable() {
-          public void run() {
-              Lines lineComponent = new Lines(650, 650);
-              for (int i=0; i<n/2; i++) {
-                  lineComponent.addLine();
-              }
+            //declare game
+            Game g = new Game(n, t, m, e);
+            
+            Runnable r = new Runnable() {
+                public void run() {
+                Draw lineComponent = new Draw(650, 650);
+                    for (int i=0; i<n/2; i++) {
+                        lineComponent.addLine();
+                    }
               JOptionPane.showMessageDialog(null, lineComponent);
-          }
-      };
-      SwingUtilities.invokeLater(r);
+                }
+            };
+            
+        SwingUtilities.invokeLater(r);
+        }
+        else {
+        
+        JFrame frame1 = new JFrame();
+        frame1.setVisible(true);
+        frame1.setSize(420, 100);
+        frame1.setLocationRelativeTo(null);
+        
+        JLabel error1 = new JLabel("Error!\nNumber of thread must be less than the number of point.");
+        
+        frame1.add(error1);
+        }
+        
+      }
+      else {
+        
+            JFrame frame2 = new JFrame();
+            frame2.setVisible(true);
+            frame2.setSize(350, 100);
+            frame2.setLocationRelativeTo(null);
+            
+            JLabel error2 = new JLabel("Error!\nNumber of point must be more than one.");
+        
+            frame2.add(error2);
+        }
 
     }catch(Exception e){
       System.out.println(e);
