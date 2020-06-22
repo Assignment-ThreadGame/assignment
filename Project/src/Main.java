@@ -127,9 +127,9 @@ class MainPanel extends JFrame {
       //declare game
       Game g = new Game(n, t, m, e);
       
-      Runnable r = new Runnable() {
+     Runnable r = new Runnable() {
           public void run() {
-              Draw lineComponent = new Draw(650, 650);
+              Lines lineComponent = new Lines(650, 650);
               for (int i=0; i<n/2; i++) {
                   lineComponent.addLine();
               }
