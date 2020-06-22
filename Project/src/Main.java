@@ -124,7 +124,7 @@ class MainPanel extends JFrame {
       
       Runnable r = new Runnable() {
           public void run() {
-              Draw lineComponent = new Draw(650, 650);
+              Lines lineComponent = new Lines(650, 650);
               for (int i=0; i<n/2; i++) {
                   lineComponent.addLine();
               }
