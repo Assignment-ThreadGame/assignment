@@ -162,17 +162,16 @@ public class Game extends JPanel{
     }
     
     private void printPoints(){
-        System.out.println("-----");
-        System.out.println("Generated points: " );
+    //  System.out.println("-----");
+    //  System.out.println("Generated points: " );
         JLabel pp = new JLabel("Generated points:" + System.lineSeparator() + " ");
         pp.setBounds(0, 0, 200, 40);
         panel.add(pp);
         
         for (int i = 0; i < points.size(); i++) {
-            
             JLabel user = new JLabel(points.get(i).toString());
             panel.add(user);
-        //    System.out.println(points.get(i).toString());
+        //  System.out.println(points.get(i).toString());
         }
     }
     
