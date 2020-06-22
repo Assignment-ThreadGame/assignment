@@ -1,5 +1,9 @@
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +22,7 @@ import javax.swing.*;
  * @author sarahsyazwina
  */
 public class Game extends JPanel{
-    
+   
     //arraylists
     private static ArrayList<Point> points = new ArrayList<Point>();
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
@@ -29,6 +33,10 @@ public class Game extends JPanel{
     private static ExecutorService e;
     private static int WIDTH = 1000, HEIGHT = 1000;
     private static long startTime;
+    
+    JPanel panel = new JPanel();
+    JFrame frame = new JFrame();
+         
     
     //status
     public enum Status{
@@ -74,10 +82,20 @@ public class Game extends JPanel{
 //        }
     }
     
-    private void printEnd(ThreadController tc[]){
-        System.out.println("-----");
-        for (int i = 0; i < tc.length; i++) {
-            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+    private void printEnd(ThreadController tc[] ){
+        
+//        System.out.println("-----");
+
+            frame.setSize(450, 300);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.add(panel);
+          
+            for (int i = 0; i < tc.length; i++) {
+                JLabel user = new JLabel(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+                user.setBounds(100, 300, 200, 40);
+                panel.add(user);
+            //  System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
         }
     }
     
@@ -145,9 +163,16 @@ public class Game extends JPanel{
     
     private void printPoints(){
         System.out.println("-----");
-        System.out.println("Generated points: ");
+        System.out.println("Generated points: " );
+        JLabel pp = new JLabel("Generated points:" + System.lineSeparator() + " ");
+        pp.setBounds(0, 0, 200, 40);
+        panel.add(pp);
+        
         for (int i = 0; i < points.size(); i++) {
-            System.out.println(points.get(i).toString());
+            
+            JLabel user = new JLabel(points.get(i).toString());
+            panel.add(user);
+        //    System.out.println(points.get(i).toString());
         }
     }
     
