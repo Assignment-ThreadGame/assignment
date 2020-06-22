@@ -1,8 +1,3 @@
-
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,46 +8,137 @@ import java.util.concurrent.Executors;
  *
  * @author sarahsyazwina
  */
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
+    
     public static void main(String[] args) {
-        Scanner k = new Scanner(System.in);
-        int n = 0, t = 0, m = 0;
         
-        //get the thrads, number of points, and time
-        while(n <= 0){
-            System.out.println("How many points?");
-            //n = k.nextInt();
-            n = 4;
-        }
-        while(t <= 0 || n < t){
-            System.out.println("How many threads?");
-            //t = k.nextInt();
-            t = 2;
-        }
-        while(m <= 0){
-            System.out.println("How many seconds?");
-            //m = k.nextInt();
-            m = 90;
-        }
+        MainPanel mp = new MainPanel();
+        mp.setVisible(true);
         
-        //declare executor
-        ExecutorService e = Executors.newFixedThreadPool(t);
+    }    
+}
+
+
+
+class MainPanel extends JFrame {
+
+    private  JLabel number = new JLabel("Enter the number of");
+    private  JLabel upoint = new JLabel("Points:"); 
+    private  JLabel uthread = new JLabel("Threads:");
+    private  JLabel useconds = new JLabel("Seconds:");
+    
+    private  JTextField point = new JTextField(); 
+    private  JTextField thread = new JTextField(); 
+    private  JTextField seconds = new JTextField(); 
+    
+    private  JButton play = new JButton("Start Game");
+    private  JButton exit = new JButton("Exit");
+
+  public MainPanel(){
         
-        //declare game
-        Game g = new Game(n, t, m);
-        
-//        //start threads
-//        ThreadController tc[] = new ThreadController[t];
-//        int count = 0;
-//        while(count < t){
-//            tc[count] = new ThreadController(g);
-//            e.submit(tc[count]);
-//            count++;
-//        }
-//        //set game start time now
-//        g.setStart();
-//        
-//        e.shutdownNow();
-//        
+        setTitle("Games");
+        setSize(1000, 1000);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setResizable(false);
+
+    component();
+    operation();   
+  }
+
+  private void component(){
+    
+    //button
+    play.setBounds(10, 170, 150, 25);
+    exit.setBounds(200, 170, 150, 25);
+    add(play);
+    add(exit);
+    
+    
+    //label
+    number.setBounds(10, 20, 200, 40);
+    upoint.setBounds(10, 50, 200, 40);
+    uthread.setBounds(10, 80, 200, 40);
+    useconds.setBounds(10, 110, 200, 40);
+    
+    add(useconds);
+    add(uthread);
+    add(number);
+    add(upoint);
+    
+    
+    //textfield
+    point.setBounds(140, 60, 165, 25);
+    thread.setBounds(140, 90, 165, 25);
+    seconds.setBounds(140, 120, 165, 25);
+    
+    add(seconds);
+    add(thread);
+    add(point);
+  }
+
+  private void operation(){
+
+    this.addWindowListener(new WindowAdapter() {
+      public void windowClosing(WindowEvent e){
+       System.exit(1);
+      }
+    });
+
+    exit.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        exitclick(e);
+      }
+    });
+
+    play.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        playclick(e);
+      }
+    });
+  }
+  
+  private void exitclick(ActionEvent evt){
+    System.exit(0);
+  }
+  
+  private void playclick(ActionEvent evt){
+    Integer n,t,m;
+    try{
+      n = Integer.parseInt(point.getText());
+      t = Integer.parseInt(thread.getText());
+      m = Integer.parseInt(seconds.getText());
+      
+      //declare executor
+      ExecutorService e = Executors.newFixedThreadPool(t);
+      
+      //declare game
+      Game g = new Game(n, t, m, e);
+      
+      Runnable r = new Runnable() {
+          public void run() {
+              Draw lineComponent = new Draw(650, 650);
+              for (int i=0; i<n/2; i++) {
+                  lineComponent.addLine();
+              }
+              JOptionPane.showMessageDialog(null, lineComponent);
+          }
+      };
+      SwingUtilities.invokeLater(r);
+
+    }catch(Exception e){
+      System.out.println(e);
+      JOptionPane.showMessageDialog(null, 
+          e.toString(),
+          "Error", 
+          JOptionPane.ERROR_MESSAGE);
     }
+  }
 }
