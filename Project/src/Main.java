@@ -33,7 +33,7 @@ public class Main {
 }
 class MainPanel extends JFrame {
 
-    private  JLabel number = new JLabel("Enter the number of");
+    private  JLabel number = new JLabel("Enter the following number");
     private  JLabel upoint = new JLabel("Points:"); 
     private  JLabel uthread = new JLabel("Threads:");
     private  JLabel useconds = new JLabel("Seconds:");
@@ -44,12 +44,20 @@ class MainPanel extends JFrame {
     
     private  JButton play = new JButton("Start Game");
     private  JButton exit = new JButton("Exit");
+    
+    private JFrame frame1 = new JFrame();
+    private JFrame frame2 = new JFrame();
+    private JFrame frame3 = new JFrame();
+    private JFrame frame4 = new JFrame();
+    private JFrame frame5 = new JFrame();
+    private JFrame frame6 = new JFrame();
 
   public MainPanel(){
         
-        setTitle("Game");
-        setSize(1000, 1000);
+        setTitle("Games");
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(null);
         setResizable(false);
 
@@ -61,17 +69,17 @@ class MainPanel extends JFrame {
   private void component(){
     
     //button
-    play.setBounds(350, 500, 150, 25);
-    exit.setBounds(500, 500, 150, 25);
+    play.setBounds(110, 280, 130, 25);
+    exit.setBounds(260, 280, 130, 25);
     add(play);
     add(exit);
     
     
     //label
-    number.setBounds(400, 310, 200, 40);
-    upoint.setBounds(400, 350, 200, 40);
-    uthread.setBounds(400, 380, 200, 40);
-    useconds.setBounds(400, 410, 200, 40);
+    number.setBounds(170, 100, 200, 40);
+    upoint.setBounds(140, 150, 200, 40);
+    uthread.setBounds(140, 180, 200, 40);
+    useconds.setBounds(140, 210, 200, 40);
     
     add(useconds);
     add(uthread);
@@ -80,9 +88,9 @@ class MainPanel extends JFrame {
     
     
     //textfield
-    point.setBounds(460, 360, 165, 25);
-    thread.setBounds(460, 390, 165, 25);
-    seconds.setBounds(460, 420, 165, 25);
+    point.setBounds(210, 160, 165, 25);
+    thread.setBounds(210, 190, 165, 25);
+    seconds.setBounds(210, 220, 165, 25);
     
     add(seconds);
     add(thread);
@@ -121,46 +129,72 @@ class MainPanel extends JFrame {
       t = Integer.parseInt(thread.getText());
       m = Integer.parseInt(seconds.getText());
       
-      if(n>=1){
-        if (n>t){
+        if(n>=1 && n>t && m>0){
+        
             //declare executor
             ExecutorService e = Executors.newFixedThreadPool(t);
       
             //declare game
             Game g = new Game(n, t, m, e);
+        }   
+        else if (n>=1 && n>t && m<0) {
             
+            frame1.setVisible(true);
+            frame1.setSize(330, 100);
+            frame1.setLocationRelativeTo(null);
+        
+            JLabel error1 = new JLabel("Error!\nNumber of second must be more than one.");
+            frame1.add(error1);
         }
-        else {
+        else if(n<1 && n>t && m>0){
         
-        JFrame frame1 = new JFrame();
-        frame1.setVisible(true);
-        frame1.setSize(420, 100);
-        frame1.setLocationRelativeTo(null);
-        
-        JLabel error1 = new JLabel("Error!\nNumber of threads must be less than the number of point.");
-        
-        frame1.add(error1);
-        }
-        
-      }
-      else {
-        
-            JFrame frame2 = new JFrame();
             frame2.setVisible(true);
             frame2.setSize(350, 100);
             frame2.setLocationRelativeTo(null);
-            
-            JLabel error2 = new JLabel("Error!\nNumber of points must be more than one.");
         
+            JLabel error2 = new JLabel("Error!\nNumber of point must be more than one.");
             frame2.add(error2);
+        }
+        else if(n>1 && n<t && m>0){
+            
+            frame3.setVisible(true);
+            frame3.setSize(500, 100);
+            frame3.setLocationRelativeTo(null);
+        
+            JLabel error3 = new JLabel("Error!\nNumber of point must be more than the number of thread."); //done
+            frame3.add(error3);
+        }
+        else if (n<1 && n>t && m<1){
+            
+            frame4.setVisible(true);
+            frame4.setSize(500, 100);
+            frame4.setLocationRelativeTo(null);
+        
+            JLabel error4 = new JLabel("Error!\nNumber of point and second must be more than one");
+            frame4.add(error4);
+        }
+        else if (n>1 && n<t && m<1){
+           
+            frame5.setVisible(true);
+            frame5.setSize(500, 100);
+            frame5.setLocationRelativeTo(null);
+        
+            JLabel error5 = new JLabel("Error!\nNumber of point must be more than the number of thread and number of second must be more than one");
+            frame4.add(error5);
+        }
+        else {
+            
+            frame6.setVisible(true);
+            frame6.setSize(750, 100);
+            frame6.setLocationRelativeTo(null);
+            
+            JLabel error6 = new JLabel("Error!\nNumber of point and second must be more than one & number of thread must be less than the number of point.");
+            frame6.add(error6);
         }
 
     }catch(Exception e){
-      System.out.println(e);
-      JOptionPane.showMessageDialog(null, 
-          e.toString(),
-          "Error", 
-          JOptionPane.ERROR_MESSAGE);
+        System.out.println(e);
+        JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
     }
   }
 }
