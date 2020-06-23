@@ -13,3 +13,4 @@ Project/nbproject/private/private.xml
 *.class
 *.xml
 *.class
+/Project/dist/

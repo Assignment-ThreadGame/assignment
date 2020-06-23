@@ -78,12 +78,15 @@ public class Game extends JPanel{
         while(!e.isTerminated()){
             
         }
+        
+        //visualising game
         printEdges();
         printEnd(tc);
         System.out.println("-----");
         for (ThreadController tc1 : tc) {
             System.out.println(tc1.getName() + " created " + tc1.getWin() + " edge(s) and failed " + tc1.getFail() + " time(s).");
         }
+        
         Runnable r = new Runnable() {
             @Override
             public void run() {
