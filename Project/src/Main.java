@@ -33,7 +33,7 @@ public class Main {
 }
 class MainPanel extends JFrame {
 
-    private  JLabel number = new JLabel("Enter the following number");
+    private  JLabel number = new JLabel("Start a game with...");
     private  JLabel upoint = new JLabel("Points:"); 
     private  JLabel uthread = new JLabel("Threads:");
     private  JLabel useconds = new JLabel("Seconds:");
@@ -54,7 +54,7 @@ class MainPanel extends JFrame {
 
   public MainPanel(){
         
-        setTitle("Games");
+        setTitle("Game");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -101,7 +101,7 @@ class MainPanel extends JFrame {
 
     this.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent e){
-       System.exit(1);
+       System.exit(0);
       }
     });
 

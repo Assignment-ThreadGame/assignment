@@ -19,6 +19,7 @@ public class ThreadController implements Runnable{
     private int fail;
     private int win;
     private String name;
+    private int num;
     private double runtime;
     
     public ThreadController(Game g) {
@@ -34,6 +35,7 @@ public class ThreadController implements Runnable{
         String t = Thread.currentThread().getName();
         String s[] = t.split("-");
         name = "Thread " + s[3];
+        num = Integer.parseInt(s[3]);
         System.out.println("-----\nStarting : " + name);
         try{
             //while the thread has not failed > 20 and game is not over
@@ -74,6 +76,10 @@ public class ThreadController implements Runnable{
     
     public String getName() {
         return name;
+    }
+    
+    public int getNum() {
+        return num;
     }
     
     private boolean isOver(){
