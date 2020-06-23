@@ -91,13 +91,13 @@ public class Game extends JPanel{
         
 //        System.out.println("-----");
 
-            frame.setSize(450, 300);
+            frame.setSize(350, 300);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.add(panel);
           
             for (int i = 0; i < tc.length; i++) {
-                JLabel user = new JLabel(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+                JLabel user = new JLabel(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).\n");
                 user.setBounds(100, 300, 200, 40);
                 panel.add(user);
             //  System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
@@ -170,12 +170,13 @@ public class Game extends JPanel{
     //  System.out.println("-----");
     //  System.out.println("Generated points: " );
         JLabel pp = new JLabel("Generated points:" + System.lineSeparator() + " ");
-        pp.setBounds(0, 0, 200, 40);
+        pp.setBounds(100, 300, 30, 40);
         panel.add(pp);
         
         for (int i = 0; i < points.size(); i++) {
-            JLabel user = new JLabel(points.get(i).toString());
+            JLabel user = new JLabel("<html> <br>" + points.get(i).toString() + "<br> </html>");
             panel.add(user);
+            
         //  System.out.println(points.get(i).toString());
         }
     }
