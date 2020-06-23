@@ -1,10 +1,4 @@
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -26,13 +20,14 @@ public class Game extends JPanel{
     //arraylists
     private static ArrayList<Point> points = new ArrayList<Point>();
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
-    private static ArrayList<Line> lines  = new ArrayList<>();
-    
+        
     //other
     private static int n, t, m, z;
     private static ExecutorService e;
     private static int WIDTH = 1000, HEIGHT = 1000;
     private static long startTime;
+    
+    private static Draw line = new Draw(1000, 1000);
     
     JPanel panel = new JPanel();
     JFrame frame = new JFrame();
@@ -80,9 +75,19 @@ public class Game extends JPanel{
 //        for (int i = 0; i < tc.length; i++) {
 //            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
 //        }
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < edges.size(); i++) {
+                    line.addLine((edges.get(i).getThread()-1),edges.get(i).getA().getX(),edges.get(i).getA().getY(),edges.get(i).getB().getX(),edges.get(i).getB().getY());
+                }
+                JOptionPane.showMessageDialog(null, line);
+            }
+        };
+        SwingUtilities.invokeLater(r);
     }
     
-    private void printEnd(ThreadController tc[] ){
+    private void printEnd(ThreadController tc[]) {
         
 //        System.out.println("-----");
 

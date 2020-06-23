@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -48,7 +47,7 @@ class MainPanel extends JFrame {
 
   public MainPanel(){
         
-        setTitle("Games");
+        setTitle("Game");
         setSize(1000, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -56,6 +55,7 @@ class MainPanel extends JFrame {
 
     component();
     operation();   
+    
   }
 
   private void component(){
@@ -129,17 +129,6 @@ class MainPanel extends JFrame {
             //declare game
             Game g = new Game(n, t, m, e);
             
-            Runnable r = new Runnable() {
-                public void run() {
-                Draw lineComponent = new Draw(650, 650);
-                    for (int i=0; i<n/2; i++) {
-                        lineComponent.addLine();
-                    }
-              JOptionPane.showMessageDialog(null, lineComponent);
-                }
-            };
-            
-        SwingUtilities.invokeLater(r);
         }
         else {
         
@@ -148,7 +137,7 @@ class MainPanel extends JFrame {
         frame1.setSize(420, 100);
         frame1.setLocationRelativeTo(null);
         
-        JLabel error1 = new JLabel("Error!\nNumber of thread must be less than the number of point.");
+        JLabel error1 = new JLabel("Error!\nNumber of threads must be less than the number of point.");
         
         frame1.add(error1);
         }
@@ -161,7 +150,7 @@ class MainPanel extends JFrame {
             frame2.setSize(350, 100);
             frame2.setLocationRelativeTo(null);
             
-            JLabel error2 = new JLabel("Error!\nNumber of point must be more than one.");
+            JLabel error2 = new JLabel("Error!\nNumber of points must be more than one.");
         
             frame2.add(error2);
         }

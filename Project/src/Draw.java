@@ -8,11 +8,10 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import javax.swing.JOptionPane;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,41 +23,43 @@ import java.util.Random;
 
 class Draw extends JComponent {
 
-    ArrayList<Line2D.Double> lines;
+    ArrayList<Lines> lines;
     Random random;
+    
+    //colors for threads
+    Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.gray, Color.green, Color.lightGray, Color.magenta, Color.orange, Color.pink, Color.red, Color.white, Color.yellow};
+    int idx = 0;
 
     Draw (int width, int height) {
         super();
         setPreferredSize(new Dimension(width,height));
-        lines = new ArrayList<Line2D.Double>();
+        lines = new ArrayList<Lines>();
         random = new Random();
     }
 
-    public void addLine() {
-        int width = (int)getPreferredSize().getWidth();
-        int height = (int)getPreferredSize().getHeight();
+    public void addLine(int thread, float ax, float ay, float bx, float by) {
+        idx = thread;
         Line2D.Double line = new Line2D.Double(
-            random.nextInt(width),
-            random.nextInt(height),
-            random.nextInt(width),
-            random.nextInt(height)
+            ax,
+            ay,
+            bx,
+            by
             );
-        lines.add(line);
+        Color temp = colors[idx];
+        Lines lines = new Lines(line, temp);
+        this.lines.add(lines);
         repaint();
     }
 
     public void paintComponent(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setColor(Color.white);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
         Dimension d = getPreferredSize();
-        g.setColor(Color.black);
-        for (Line2D.Double line : lines) {
-            g.drawLine(
-                (int)line.getX1(),
-                (int)line.getY1(),
-                (int)line.getX2(),
-                (int)line.getY2()
-                );
+        for (Lines line : lines) {
+            g2d.setColor(line.color);
+            g2d.draw(line.line);
         }
     }
 }
