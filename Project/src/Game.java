@@ -1,9 +1,11 @@
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,10 +30,11 @@ public class Game extends JPanel{
     private static long startTime;
     
     private static Draw line = new Draw(1000, 1000);
+    private static JPanel panel = new JPanel(new GridBagLayout());
+    private static JFrame frame = new JFrame();
+    private static GridBagConstraints c = new GridBagConstraints();
     
-    JPanel panel = new JPanel();
-    JFrame frame = new JFrame();
-         
+    private static final String[] colors = {"black", "blue", "aqua", "gray", "green", "silver", "fuchsia", "orange", "purple", "red", "yellow"};
     
     //status
     public enum Status{
@@ -49,7 +52,13 @@ public class Game extends JPanel{
         Game.n = n;
         Game.m = m;
         Game.e = e;
+        Game.c.insets = new Insets(4, 4, 4, 4);
+        Game.c.gridx = 0;
+        Game.c.weightx = 1;
+        Game.c.gridy = 0;
+        Game.c.anchor = GridBagConstraints.WEST;
         z = 0;
+        panel.removeAll();
         //generate n random points
         genPoints();
         //start threads
@@ -71,10 +80,10 @@ public class Game extends JPanel{
         }
         printEdges();
         printEnd(tc);
-//        System.out.println("-----");
-//        for (int i = 0; i < tc.length; i++) {
-//            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
-//        }
+        System.out.println("-----");
+        for (ThreadController tc1 : tc) {
+            System.out.println(tc1.getName() + " created " + tc1.getWin() + " edge(s) and failed " + tc1.getFail() + " time(s).");
+        }
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -88,20 +97,31 @@ public class Game extends JPanel{
     }
     
     private void printEnd(ThreadController tc[]) {
-        
-//        System.out.println("-----");
-
-            frame.setSize(350, 300);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-            frame.add(panel);
-          
-            for (int i = 0; i < tc.length; i++) {
-                JLabel user = new JLabel(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).\n");
-                user.setBounds(100, 300, 200, 40);
-                panel.add(user);
-            //  System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+        JLabel pe = new JLabel("<html> <b>Edges created</b>:" + "<br/><br/>");
+        for (int i = 0; i < edges.size(); i++) {
+            pe.setText(pe.getText() + edges.get(i).toString() + "<br/>");
         }
+        pe.setText(pe.getText() + "</html>");
+        pe.setBorder(new MatteBorder(1, 0, 0, 0, Color.BLACK));
+        panel.add(pe, c);
+        c.gridy++;
+        System.out.println("-----");
+        JLabel user = new JLabel("<html> <b>Thread status</b>:" + "<br/> <br/>");
+        for (int i = 0; i < tc.length; i++) {
+            int idx = 0;
+            if(!((tc[i].getNum() - 1) > colors.length))
+                idx = tc[i].getNum() - 1;
+            user.setText(user.getText() + "<font color=" + colors[idx] + "> " + tc[i].getName() + "</font> created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s). <br/>");
+            System.out.println(tc[i].getName() + " created " + tc[i].getWin() + " edge(s) and failed " + tc[i].getFail() + " time(s).");
+        }
+        user.setText(user.getText() + "</html>");
+        user.setBorder(new MatteBorder(1, 0, 0, 0, Color.BLACK));
+        panel.add(user, c);
+        
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.add(panel);
+        frame.pack();
     }
     
     public Status addEdge(){
@@ -167,18 +187,17 @@ public class Game extends JPanel{
     }
     
     private void printPoints(){
-    //  System.out.println("-----");
-    //  System.out.println("Generated points: " );
-        JLabel pp = new JLabel("Generated points:" + System.lineSeparator() + " ");
-        pp.setBounds(100, 300, 30, 40);
-        panel.add(pp);
-        
+        System.out.println("-----");
+        System.out.println("Generated points: " );
+        JLabel pp = new JLabel("<html> <b>Generated points</b>:" + "<br/> <br/>");
+
         for (int i = 0; i < points.size(); i++) {
-            JLabel user = new JLabel("<html> <br>" + points.get(i).toString() + "<br> </html>");
-            panel.add(user);
-            
-        //  System.out.println(points.get(i).toString());
+            pp.setText(pp.getText() + points.get(i).toString() + "<br/>");
+            System.out.println(points.get(i).toString());
         }
+        pp.setText(pp.getText() + "</html>");
+        panel.add(pp, c);
+        c.gridy++;
     }
     
     private void printEdges(){

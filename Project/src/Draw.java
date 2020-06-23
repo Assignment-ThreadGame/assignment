@@ -27,7 +27,7 @@ class Draw extends JComponent {
     Random random;
     
     //colors for threads
-    Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.gray, Color.green, Color.lightGray, Color.magenta, Color.orange, Color.pink, Color.red, Color.white, Color.yellow};
+    Color[] colors = {Color.black, Color.blue, Color.cyan, Color.darkGray, Color.green, Color.lightGray, Color.magenta, Color.orange, Color.pink, Color.red, Color.yellow};
     int idx = 0;
 
     Draw (int width, int height) {
@@ -45,7 +45,9 @@ class Draw extends JComponent {
             bx,
             by
             );
-        Color temp = colors[idx];
+        Color temp = colors[0];
+        if(!(idx > colors.length))
+            temp = colors[idx];
         Lines lines = new Lines(line, temp);
         this.lines.add(lines);
         repaint();
